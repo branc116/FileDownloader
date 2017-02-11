@@ -86,6 +86,18 @@ namespace FileDownloader.Collections
                 return _dict.Count;
             }
         }
+        public IDeltaSizeInfo WholeSize
+        {
+            get
+            {
+                var ds = new DeltaSizeInfo(DateTime.Now) { EndedAt = DateTime.Now };
+                foreach(var f in this)
+                {
+                    ds = ds + (f?.DownloadInfo ?? new DeltaSizeInfo(DateTime.Now));
+                }
+                return ds;
+            }
+        }
         /// <summary>
         /// All of the Uris in the collection
         /// </summary>

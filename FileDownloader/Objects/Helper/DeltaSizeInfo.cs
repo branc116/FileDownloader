@@ -157,14 +157,17 @@ namespace FileDownloader.Objects.Helper
                 return (int)(CurrentSizeBytes >> 30);
             }
         }
-
         public DeltaSizeInfo(DateTime StartTime)
         {
             this.StartedAt = StartTime;
         }
         public override string ToString()
         {
-            return $"TimeDelta: {Duration.Seconds}s, Size: {SizeAuto}, Speed: {SpeedAuto}";
+            return $"TimeDelta: {(int)Duration.TotalSeconds}s, Size: {SizeAuto}, Speed: {SpeedAuto}";
         }
+        public static DeltaSizeInfo operator+(DeltaSizeInfo one, IDeltaSizeInfo two) => new DeltaSizeInfo(one?.StartedAt ?? DateTime.Now) {
+                                                                                          SizeBytes = (one?.SizeBytes ?? 0) + (two?.SizeBytes ?? 0),
+                                                                                          CurrentSizeBytes = (one?.CurrentSizeBytes ?? 0) + (two?.CurrentSizeBytes ?? 0),
+                                                                                          EndedAt = (one?.EndedAt + (two.Duration))  ?? DateTime.Now };
     }
 }

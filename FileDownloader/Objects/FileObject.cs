@@ -117,7 +117,7 @@ namespace FileDownloader.Objects
                            DownloadInfo.EndedAt = DateTime.Now;
                            DownloadInfo.CurrentSizeBytes = tempStream?.Seek(0, SeekOrigin.Current) ?? 0;
                            FileDownloading?.Invoke(this, new FileDownloadingArgs(this, DownloadInfo));
-                           await Task.Delay(400);
+                           await Task.Delay(30);
                        }
                     });
                     await Task.WhenAll(down, Proggress);
